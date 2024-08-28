@@ -28,8 +28,11 @@ jobs:
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/hello-world-python:latest .
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/hello-world-python:latest
 
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
       - name: Deploy to Production Server
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
-          ssh -i $SSH_PRIVATE_KEY user@production-server "docker pull ${{ secrets.DOCKERHUB_USERNAME }}/hello-world-python:latest && docker run -d --name hello-world-container ${{ secrets.DOCKERHUB_USERNAME }}/hello-world-python:latest"
+          ssh -o StrictHostKeyChecking=no user@production-server "docker pull ${{ secrets.DOCKERHUB_USERNAME }}/hello-world-python:latest && docker run -d --name hello-world-container ${{ secrets.DOCKERHUB_USERNAME }}/hello-world-python:latest"
