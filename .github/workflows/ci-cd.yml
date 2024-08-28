@@ -23,8 +23,8 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/hello-world-python:latest .
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/hello-world-python:latest
+          docker build -t ${{ secrets.nishanthiniram }}/hello-world-python:latest .
+          docker push ${{ secrets.Nisha@123 }}/hello-world-python:latest
 
   test:
     runs-on: ubuntu-latest
